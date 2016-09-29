@@ -1,4 +1,4 @@
-#multiuser blog in python
+#Multiuser Blog in Python
 A simple blog created using Bootstrap, jQuery, Python (webapp2, jinja2) hosted on Google App Engine
 
 This is a multiuser blog application where users can read blogs. Signed in users can edit/delete their own posts, write/edit/delete comments and like others' posts. The project structure is as follows:
