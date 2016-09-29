@@ -1,22 +1,8 @@
-<!doctype html>
-<html>
+{% extends "master.html" %}
 
-<head>
-    <title>Multi User Blog</title>
-    <meta class="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <!-- Bootstrap 3 -->
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
-
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
-
-    <link href="/static/css/blog.css" rel="stylesheet" />
-
-</head>
-
-<body>
-    <!-- DELETE Modal -->
-    <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <!-- DELETE Modal -->
+   {% block deleteModal %}
+        <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -35,10 +21,11 @@
             </div>
         </div>
     </div>
+   {% endblock %}
      <!-- End DELETE Modal -->
-    <div class="container">
-
-         <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+<!-- nav area -->
+{% block navigationArea %}
+     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-6">
@@ -48,7 +35,7 @@
                     {% if username %}
                     <div class="col-xs-6">
                         <span class="h4 pull-right">
-        
+
         <div class="btn-group">
             <button class="btn btn-default">{{username}}</button>
             <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -78,78 +65,77 @@
             </div>
     </div>
     </nav>
-    {% for blogpost in blogposts %}
-    <!-- One blog post -->
-    <div id="{{blogpost.key().id()}}">
-        <div class="row">
+    </nav>
+{% endblock %}
+<!-- End nav area -->
 
-            <div class="col-xs-10 h4">
-                <a href="/blog/{{blogpost.key().id()|str}}"> {{ blogpost.subject }} </a>
-            </div>
-            <div class="col-xs-2">
-                {% if username == blogpost.author %}
-                <a class="mainlink" href="/blog/editpost/{{blogpost.key().id()|str}}"><button type="button" class="btn btn-default" aria-label="Left Align">
-                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                    </button> </a>
+{% block mainContainArea %}
+       {% for blogpost in blogposts %}
+        <!-- One blog post -->
+        <div id="{{blogpost.key().id()}}">
+            <div class="row">
 
-                <button type="button" class="btn btn-default" aria-label="Left Align" onclick="setupDeletePost('{{blogpost.key().id()|str}}')">
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </button> {% endif %}
+                <div class="col-xs-10 h4">
+                    <a href="/blog/{{blogpost.key().id()|str}}"> {{ blogpost.subject }} </a>
+                </div>
+                <div class="col-xs-2">
+                    {% if username == blogpost.author %}
+                    <a class="mainlink" href="/blog/editpost/{{blogpost.key().id()|str}}"><button type="button" class="btn btn-default" aria-label="Left Align">
+                        Edit <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </button> </a>
+
+                    <button type="button" class="btn btn-default" aria-label="Left Align" onclick="setupDeletePost('{{blogpost.key().id()|str}}')">
+                        Delete <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </button> {% endif %}
+                </div>
             </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    - <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{ blogpost.author }}   <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> {{ blogpost.published|ftdt('%b %d,  %Y %I:%M %p') }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <p class="data">{{blogpost.content}} </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12">
+
+                    {% if username == blogpost.author %}
+                    <button type="button" class="btn btn-default disabled" aria-label="Left Align">
+                <span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+            </button> {% elif username and likedposts and blogpost.key().id()|str in likedposts %}
+                    <button type="button" id="{{ blogpost.key().id()|str +'button'}}" class="btn btn-default" aria-label="Left Align" onclick="likeUnlikeHandler('{{blogpost.key().id()}}', '{{username}}', 'unlike')">
+                <span id="{{ blogpost.key().id()|str +'heart'}}" class="glyphicon glyphicon glyphicon-heart" aria-hidden="true"></span>
+            </button> {% elif username %}
+                    <button type="button" id="{{ blogpost.key().id()|str +'button'}}" class="btn btn-default" aria-label="Left Align" onclick="likeUnlikeHandler('{{blogpost.key().id()}}', '{{username}}', 'like')">
+                <span id="{{ blogpost.key().id()|str +'heart'}}" class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+            </button> {% else %}
+                    <a href="/login"><button type="button" class="btn btn-default" aria-label="Left Align">
+                <span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
+            </button></a> {% endif %}
+
+                    <span id="{{ blogpost.key().id()|str+'likes'}}" class="smallbox">{{ blogpost.likes }}</span>
+
+                   <a href="/blog/{{blogpost.key().id()|str}}" class="mainlink"> <button type="button" class="btn btn-default" aria-label="Left Align">
+      <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+    </button> </a><span class="smallbox">{{ blogpost.comments }}</span>
+
+
+                </div>
+
+            </div>
+            <hr>
         </div>
+        <!-- END BLOG POST-->
+        {% endfor %}
+{% endblock %}
+<!-- End of  mainContainArea -->
 
-        <div class="row">
-            <div class="col-xs-12">
-                - By {{ blogpost.author }} on {{ blogpost.published|ftdt('%b %d,  %Y %I:%M %p') }}
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <p class="data">{{blogpost.content}} </p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-
-                {% if username == blogpost.author %}
-                <button type="button" class="btn btn-default disabled" aria-label="Left Align">
-            <span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-        </button> {% elif username and likedposts and blogpost.key().id()|str in likedposts %}
-                <button type="button" id="{{ blogpost.key().id()|str +'button'}}" class="btn btn-default" aria-label="Left Align" onclick="likeUnlikeHandler('{{blogpost.key().id()}}', '{{username}}', 'unlike')">
-            <span id="{{ blogpost.key().id()|str +'heart'}}" class="glyphicon glyphicon glyphicon-heart" aria-hidden="true"></span>
-        </button> {% elif username %}
-                <button type="button" id="{{ blogpost.key().id()|str +'button'}}" class="btn btn-default" aria-label="Left Align" onclick="likeUnlikeHandler('{{blogpost.key().id()}}', '{{username}}', 'like')">
-            <span id="{{ blogpost.key().id()|str +'heart'}}" class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-        </button> {% else %}
-                <a href="/login"><button type="button" class="btn btn-default" aria-label="Left Align">
-            <span class="glyphicon glyphicon glyphicon-heart-empty" aria-hidden="true"></span>
-        </button></a> {% endif %}
-
-                <span id="{{ blogpost.key().id()|str+'likes'}}" class="smallbox">{{ blogpost.likes }}</span>
-
-               <a href="/blog/{{blogpost.key().id()|str}}" class="mainlink"> <button type="button" class="btn btn-default" aria-label="Left Align">
-  <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-</button> </a><span class="smallbox">{{ blogpost.comments }}</span>
-
-
-            </div>
-
-        </div>
-        <hr>
-    </div>
-    <!-- END BLOG POST-->
-    {% endfor %}
-
-
-
-    </div>
-    <!-- Bootstrap 3 -->
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-
+{% block footerScript %}
     <script src="/static/js/bloghome.js"></script>
-</body>
-
-</html>
+{% endblock %}

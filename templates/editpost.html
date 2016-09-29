@@ -1,70 +1,79 @@
-<!doctype html>
-<html>
-    <head>
-        <title>Edit blog post</title>
-        <meta charset="utf-8">
-       <!-- <link rel="stylesheet" type="text/css" href="blog.css">-->
-       <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
-        <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" />
+{% extends "master.html" %}
 
-        <link href="/static/css/blog.css" rel="stylesheet" />
-            
-    </head>
-    <body>
-            <div class="container">
-              <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
-          <div class="container">
-           <div class="row">
-                <div class="col-xs-6">
-                    <a class="navbar-brand page-scroll" href="/">Multiuser Blog</a>
+  <!-- DELETE Modal -->
+   {% block deleteModal %}
+        <div class="modal" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Delete confirmation</h4>
                 </div>
-                
-                {% if username %}
-                <!--<div class="col-xs-6 text-right">
-                    <span class="h4  navbar-text">Welcome, {{ username }} </span>
-                   
-                </div>-->
-                <div class="col-xs-6">
-        <span class="h4 pull-right">
-        
+                <div class="modal-body">
+                    Are you sure you want to delete this blog post? With all the comments and likes?
+                    <input type="hidden" id="blogid" />
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" onclick="deletePost()">Yes, I am sure</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">No, I'll leave it</button>
+                </div>
+            </div>
+        </div>
+    </div>
+   {% endblock %}
+     <!-- End DELETE Modal -->
+<!-- nav area -->
+{% block navigationArea %}
+     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <span class="h4 navbar-text">Multi user Blog</span>
+                    </div>
+
+                    {% if username %}
+                    <div class="col-xs-6">
+                        <span class="h4 pull-right">
+
         <div class="btn-group">
             <button class="btn btn-default">{{username}}</button>
             <button class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                 <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu">
-                <li><a href="/blog/newpost"><span class="glyphicon glyphicon-plus"> </span> New Post</a></li>
-                <!--<li><a href="#"><span class="glyphicon glyphicon-list"> </span> Drafts</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#"><span class="glyphicon glyphicon-cog"> </span> Account Settings</a></li>-->
-                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"> </span> Logout</a></li>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/blog/newpost"><span class="glyphicon glyphicon-plus"> </span> New Post</a></li>
+                           <!-- <li><a href="#"><span class="glyphicon glyphicon-list"> </span> Drafts</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"> </span> Account Settings</a></li>-->
+                            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"> </span> Logout</a></li>
 
-            </ul>
-        </div>
-      </span></div>
+                        </ul>
+                    </div>
+                    </span>
+                </div>
 
-               {% endif %}
-                {% if not username %}
+                {% endif %} {% if not username %}
                 <div class="col-xs-6 text-right">
-                    <span class="h4"><a href="/signup"><span class="navbar-link">Sign up /</span></a>
-                    
-                   <a href="/login"><span class="navbar-link ">Login</span></a></span>
-                   
+                    <span class="pull-right"><a href="/signup" class="mainlink text-right"><span class="h4 navbar-text">Sign up / </span></a>
+                    <a
+                        href="/login" class="mainlink text-right"><span class="h4 navbar-text noleft">Login</span></a>
+                        </span>
+
                 </div>
                 {% endif %}
             </div>
-</div>
-</nav>
+    </div>
+    </nav>
+    </nav>
+{% endblock %}
+<!-- End nav area -->
 
-    
+{% block mainContainArea %}
         <div class="row">
             <div class="col-xs-12">
         <h2>Edit your post</h2></div>
         </div>
-       
-
-        
         <form method="POST">
             <input type="hidden" name="blogid" value="{{ blogid }}"" />
             <div class="form-group">
@@ -74,7 +83,7 @@
                           type="text" name="subject" value="{{ subject }}"/>
               </div>
           </div>
-           
+
             <br><br>
             <div class="form-group">
               <label for="inputContent" class="control-label col-sm-2">Content</label>
@@ -85,9 +94,9 @@
             <br><br>
             <div class="row">
                 <div class="col-xs-offset-2 col-xs-10">
-           
+
             <p class="error">{{error_msg}}</p>
-            
+
                 </div>
             </div>
              <br>
@@ -107,12 +116,9 @@
 
             </div>
         </form>
-        </div>
-            </div>
-            <script src="/static/js/editpost.js"></script>
-    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
-    
-    </body>
+{% endblock %}
+<!-- End of  mainContainArea -->
 
-</html>
+{% block footerScript %}
+    <script src="/static/js/editpost.js"></script>
+{% endblock %}

@@ -1,21 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Multi User Blog</title>
-    <meta class="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <!-- Bootstrap 3 -->
-    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+{% extends "master.html" %}
 
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-
-    <link href="/static/css/blog.css" rel="stylesheet" />
-
-</head>
-
-<body>
- <div class="container">
+<!-- nav area -->
+{% block navigationArea %}
      <nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -42,12 +28,14 @@
         <!-- /.container-fluid -->
     </nav>
     </nav>
+{% endblock %}
+<!-- End nav area -->
 
-</div>
-<div class="container">
-    <div class="row">
+{% block mainContainArea %}
+     <div class="row">
       <div class="col-xs-offset-3 col-xs-6 loginblock">
-      
+          <p class="error permissino-error">{{ permission_error_message }}</p>
+
       <form class="form-horizontal" method="POST">
           <div class="form-group">
               <label for="inputusername" class="control-label col-xs-2">Username</label>
@@ -65,9 +53,9 @@
           </div>
             <div class="form-group">
               <div class="col-xs-10">
-                 
+
             <p class="error">{{error_message}}</p>
-            
+
              </div>
           </div>
           <div class="form-group">
@@ -81,16 +69,8 @@
               </div>
           </div>
       </form>
-    
+
       </div>
     </div>
-  </div>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js">
-  </script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
+{% endblock %}
+<!-- End of  mainContainArea -->

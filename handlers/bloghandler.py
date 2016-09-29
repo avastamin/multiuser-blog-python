@@ -1,5 +1,6 @@
 from google.appengine.ext import db
-
+import logging
+import json
 from utilities import Utilities
 from handler import Handler
 from models.blogposts import BlogPosts
@@ -9,7 +10,7 @@ class BlogPostHandler(Handler):
     def get(self, bpid):        
         username = ""
         user_id = self.request.cookies.get("user_id")
-        if user_id and len(user_id) > 0:
+        if user_id:
             l = user_id.split("|")
             if (user_id == Utilities.make_cookie_val(l[0])):
                 username = l[0]
@@ -35,7 +36,7 @@ class NewPostHandler(Handler):
     def get(self):
         username = ""
         user_id = self.request.cookies.get("user_id")
-        if user_id and len(user_id) > 0:
+        if user_id > 0:
             l = user_id.split("|")
             if (user_id == Utilities.make_cookie_val(l[0])):
                 username = l[0]
@@ -48,7 +49,7 @@ class NewPostHandler(Handler):
 
     def post(self):
         user_id = self.request.cookies.get("user_id")
-        if user_id and len(user_id) > 0:
+        if user_id:
             l = user_id.split("|")
             if (user_id == Utilities.make_cookie_val(l[0])):
                 username = l[0]
@@ -76,7 +77,7 @@ class EditPostHandler(Handler):
     def get(self, bpid):
         username = ""
         user_id = self.request.cookies.get("user_id")
-        if user_id and len(user_id) > 0:
+        if user_id:
             l = user_id.split("|")
             if (user_id == Utilities.make_cookie_val(l[0])):
                 username = l[0]
@@ -94,7 +95,7 @@ class EditPostHandler(Handler):
 
     def post(self, bpid):
         user_id = self.request.cookies.get("user_id")
-        if user_id and len(user_id) > 0:
+        if user_id:
             l = user_id.split("|")
             if (user_id == Utilities.make_cookie_val(l[0])):
                 username = l[0]
@@ -137,7 +138,7 @@ class DeletePostHandler(Handler):
     def post(self, blogid):
         logging.info("post del")
         user_id = self.request.cookies.get("user_id")
-        if user_id and len(user_id) > 0:
+        if user_id:
             l = user_id.split("|")
             if (user_id == Utilities.make_cookie_val(l[0])):
                 # Get the comments from data store

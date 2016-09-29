@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Multi User Blog</title>
+    <meta class="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <!-- Bootstrap 3 -->
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" />
+
+    <link href="/static/css/blog.css" rel="stylesheet" />
+
+</head>
+
+<body>
+    <!-- DELETE Modal -->
+   {% block deleteModal %}
+
+    {% endblock %}
+     <!-- End DELETE Modal -->
+    <div class="container">
+        <!-- nav area -->
+        {% block navigationArea %}
+
+        {% endblock %}
+        <!-- End nav area -->
+
+        <!-- mainContain area -->
+        {% block mainContainArea %}
+
+        {% endblock %}
+        <!-- end mainContain area -->
+
+        <!-- Comment area -->
+        {% block comment %}
+
+        {% endblock %}
+        <!-- end Comment area -->
+    </div>
+    <!-- Bootstrap 3 -->
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+
+   <!-- to add different jQuery file on different template  -->
+    {% block footerScript %}
+
+    {% endblock %}
+
+</body>
+
+</html>

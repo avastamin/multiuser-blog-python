@@ -137,4 +137,4 @@ class LikeHandler(Handler):
                 self.redirect('/blog')
         else:
             self.response.headers.add_header('set-cookie', str('user_id=;Path=/'))
-            self.redirect('/blog')
+            self.render("login.html", permission_error_message="You need to login to do this")
