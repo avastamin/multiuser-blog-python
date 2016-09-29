@@ -1,7 +1,7 @@
-# MultiUserBlog
+#multiuser blog in python
 A simple blog created using Bootstrap, jQuery, Python (webapp2, jinja2) hosted on Google App Engine
 
-This is a simple blog application where users can register/ login to post blogs. Signed in users can edit/delete their own posts, write/edit/delete comments and like others' posts. The project structure is as follows:
+This is a multiuser blog application where users can read blogs. Signed in users can edit/delete their own posts, write/edit/delete comments and like others' posts. The project structure is as follows:
 - app.yaml 
 - main.py
 - /handlers
@@ -10,9 +10,9 @@ This is a simple blog application where users can register/ login to post blogs.
      - all of the db.Model classes (Users, BlogPosts, Comments, Likes) which form the database model
 - /templates
      - the template html files which get rendered in the browser by the application 
-- /css
+- /static/css
      - the stylesheets for the html files
-- /js
+- /static/js
      - the javascript/jQuery logic that is implemented on the client side
 
 To run this project on your local system:
@@ -23,9 +23,7 @@ To run this project on your local system:
   - export PATH=$PATH:/path/to/google_appengine
   - dev_appserver.py app.yaml
 
-3. Navigate to http://localhost:[port]/blog
+3. Navigate to http://localhost:[port]
 
-Alternatively, click through to this link: http://radblog-143904.appspot.com/blog
+Alternatively, click through to this link: http://blog-144709.appspot.com or http://blog-144709.appspot.com/blog
 
-
-# multiuser-blog-python
