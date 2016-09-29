@@ -1,0 +1,31 @@
+body {
+            font-family: 'Raleway', sans-serif;
+            padding-top: 60px;
+        }
+        
+        .big {
+            margin-top: 50px;
+        }
+        
+        .data {
+            white-space: pre-wrap;
+        }
+        
+        .smallbox {
+            padding: 6px;
+        }
+        
+        .mainlink {
+            text-decoration: none;
+        }
+
+        .noleft {
+            margin-left: 0px;
+        }
+
+input[type=text] {
+               padding: 5px;
+           }
+.error {
+               color: red;
+           }
